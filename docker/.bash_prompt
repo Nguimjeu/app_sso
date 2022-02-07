@@ -1,0 +1,43 @@
+# colors
+
+BLACK="\e[0;30m"				# Black
+RED="\e[0;31m"					# Red
+GREEN="\e[0;32m"				# Green
+DARK_GREEN="\e[2;32m"		# Dark Green
+YELLOW="\e[0;33m"				# Yellow
+BLUE="\e[0;34m"					# Blue
+MAGENTA="\e[0;35m"			# Purple/Magenta
+VIOLET='\e[0;35m'				# Violet
+CYAN="\e[0;36m"					# Cyan
+DARK_CYAN="\e[2;36m"		# Cyan
+LIGHT_GRAY="\e[0;37m"		# Light gray (White?)
+DARK_GRAY="\e[2;37m"		# Dark gray
+RESET="\e[0m"    				# Text Reset
+
+export LS_OPTIONS='--color=auto'
+export CLICOLOR='Yes'
+export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD
+
+# prompt
+## git branch and combine git prompt
+function git_prompt() {
+  local ref=$(git branch 2>/dev/null | sed -n '/\* /s///p')
+  if [ "$ref" != "" ]
+  then
+    echo -e "($ref)"
+  fi
+}
+
+function color_my_prompt {
+  local __user_and_host="$YELLOW\u@\h$RESET" # \h =>to add host
+  local __cur_location="$GREEN\w$RESET"   #capital 'W': current directory, small 'w':full file path
+
+  local __git_branch="$MAGENTA\$(git_prompt)$RESET"
+  local __prompt_tail="$YELLOW\n\a$RESET"
+
+  # build prompt string
+  PS1="$__user_and_host $__cur_location $__git_branch\n> "
+}
+
+# call PROMPT_COMMAND which is executed before PS1
+export PROMPT_COMMAND=color_my_prompt

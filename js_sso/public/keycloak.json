@@ -1,0 +1,8 @@
+{
+  "realm": "sso_demo",
+  "auth-server-url": "http://keycloak.localhost/auth/",
+  "ssl-required": "external",
+  "resource": "js_sso",
+  "public-client": true,
+  "confidential-port": 0
+}
